@@ -17,3 +17,8 @@ $ scrapy crawl quotes -o items.csv
 ```bash
 $ scrapy crawl quotes -o items.xml
 ```
+
+### create sqlite3 database (database.py on quotetutorial directory)
+```bash
+python database.py
+```
