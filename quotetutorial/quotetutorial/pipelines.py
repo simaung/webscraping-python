@@ -7,7 +7,7 @@
 
 # Scraped data -> Item Containers -> Json/csv files
 # Scraped data -> Item Containers -> Pipeline -> SQL/Mongo database
-import sqlite3
+import mysql.connector
 
 class QuotetutorialPipeline(object):
 
@@ -16,7 +16,12 @@ class QuotetutorialPipeline(object):
         self.create_table()
 
     def create_connection(self):
-        self.conn = sqlite3.connect("myquotes.db")
+        self.conn = mysql.connector.connect(
+                host = 'localhost',
+                user = 'root',
+                passwd = 'aliya',
+                database = 'myquotes'
+                )
         self.curr = self.conn.cursor()
 
     def create_table(self):
@@ -35,7 +40,7 @@ class QuotetutorialPipeline(object):
         return item
 
     def store_db(self, item):
-        self.curr.execute("""insert into quotes_tb values (?,?,?)""", (
+        self.curr.execute("""insert into quotes_tb values (%s,%s,%s)""", (
             item['title'][0],
             item['author'][0],
             item['tag'][0]
